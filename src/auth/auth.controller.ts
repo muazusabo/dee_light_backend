@@ -10,7 +10,7 @@ import { ForgotPasswordDto, LoginDto, RegisterDto, ResetPasswordDto } from './au
 import { AuthService } from './auth.service';
 
 function cookieBase() {
-  const sameSite = (process.env.COOKIE_SAMESITE ?? 'lax') as 'lax' | 'strict' | 'none';
+  const sameSite = (process.env.COOKIE_SAMESITE ?? (isProd() ? 'none' : 'lax')) as 'lax' | 'strict' | 'none';
   return { httpOnly: true, secure: isProd() || sameSite === 'none', sameSite, domain: process.env.COOKIE_DOMAIN || undefined };
 }
 function setCookies(res: Response, access: string, refresh: string) {
